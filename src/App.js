@@ -1,4 +1,4 @@
-import { useState ,useEffect} from "react";
+import { useState ,useEffect,useCallback} from "react";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 import ForecastCard from "./components/ForecastCard";
@@ -11,30 +11,24 @@ import { MdVisibility } from "react-icons/md";
 
 import "./App.css";
 
-
 const API_KEY = process.env.REACT_APP_API_KEY;
-
 
 function App() {
 
-const [city, setCity] = useState("");
+const [city, setCity] = useState("London");
 const [weather, setWeather] = useState(null);
 const [forecast, setForecast] = useState([]);
 const [loading, setLoading] = useState(false);
 //const [unit, setUnit] = useState("metric");
 const [error, setError] = useState('');
 const unit="metric";
-useEffect(()=>{
-  setCity("London");
+//useEffect(()=>{
+  //setCity("London");
   //getWeather("London");
-},[]);
-useEffect(()=>{
-  if(city){
-    getWeather();
-  }
-},[city]);
+//},[]);
 
-const getWeather = async () => {
+
+const getWeather = useCallback(async () => {
   
 
 if(!city) return;
@@ -75,7 +69,14 @@ console.log("Error fetching weather");
 
 setLoading(false);
 
-};
+},[city,unit]);
+
+useEffect(()=>{
+ 
+    getWeather();
+  
+},[getWeather]);
+
 
 
 //const toggleUnit = () =>{
