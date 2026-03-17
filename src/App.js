@@ -12,7 +12,7 @@ import { MdVisibility } from "react-icons/md";
 import "./App.css";
 
 
-const API_KEY = "fade7811b608f797f6e2bde40617c614";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 
 function App() {
